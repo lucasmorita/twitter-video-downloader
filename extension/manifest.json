@@ -1,0 +1,27 @@
+{
+    "name": "Getting Started Example",
+    "description": "Build an Extension!",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "sw_feed_downloader.js"
+    },
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "scripting",
+        "webRequest",
+        "webNavigation",
+        "storage",
+        "downloads",
+        "downloads.shelf"
+    ],
+    "host_permissions": [
+        "https://twitter.com/*",
+        "https://video.twimg.com/ext_tw_video/*",
+        "https://3c09-179-113-155-6.ngrok.io/*"
+    ],
+    "action": {
+        "default_title": "download video"
+    }
+}
