@@ -49,22 +49,6 @@ function webNavigationListener(details) {
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(webNavigationListener);
 
-async function requestDownload(url, currentTab) {
-    console.debug(`requesting video for url ${url}`);
-    let server = "https://d518-179-113-155-6.ngrok.io/";
-    await fetch(server + "videos", {
-        body: JSON.stringify({
-            videoUrl: url,
-        }),
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-        },
-        method: "POST",
-    });
-}
-
 // event listeners
 chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestCallback, {
     urls: ["https://video.twimg.com/*/*.m3u8?tag*"],
