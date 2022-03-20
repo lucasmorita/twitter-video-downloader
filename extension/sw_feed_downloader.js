@@ -4,10 +4,6 @@ function getTab() {
     return chrome.tabs.query({ active: true, currentWindow: true });
 }
 
-function isFullResolutionVideoLink(details) {
-    return details.url.includes("?tag");
-}
-
 function postToDownload(url) {
     console.debug(`sending ${document.URL} to extension`);
     chrome.runtime.sendMessage({ initiator: document.URL, target: url });
@@ -23,8 +19,9 @@ function onBeforeRequestCallback(details) {
     chrome.storage.local.get("actualPage", (result) => {
         console.debug(`actualPage ${JSON.stringify(result)}`);
         if (result) {
+            
             getTab().then(tabs => {
-                if (isFullResolutionVideoLink(details) && !isHomePage(tabs)) {
+                if (!isHomePage(tabs)) {
                     console.debug(`getting main video: ${details.url}`);
                     chrome.scripting.executeScript({
                         target: { tabId: tabs[0].id },
@@ -32,7 +29,6 @@ function onBeforeRequestCallback(details) {
                         args: [details.url],
                     });
                 }
-                chrome.storage.local.remove("actualPage");
             });
         }
     });
