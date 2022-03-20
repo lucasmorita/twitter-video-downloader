@@ -66,22 +66,31 @@ async function requestDownload(url, currentTab) {
 }
 
 // event listeners
-chrome.action.onClicked.addListener((tab) => {
-    if (tab.url.startsWith("https://twitter.com/home")) {
-        console.debug("cannot download at home page!");
-        return;
-    }
-    console.debug(`initiating download for [${posts[tab.url]}]`);
-    requestDownload(posts[tab.url].split("?")[0], tab);
-});
-
 chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestCallback, {
     urls: ["https://video.twimg.com/*/*.m3u8?tag*"],
 });
 
+// syncs up post with the video url
 chrome.runtime.onMessage.addListener((req, sender, _) => {
     console.debug(
-        `${req.initiator} initiated request to download for ${req.target}!`
+        `syncing post: ${req.initiator} with video: ${req.target}!`
     );
     posts[req.initiator] = req.target;
 });
+
+function sendToServer(initiator, videoUrl) {
+    console.debug(`Sending request to download video ${videoUrl} for post ${initiator}`)
+}
+
+function showDownloadStarted(initiator, videoUrl) {
+    sendToServer(initiator, videoUrl);
+    alert(`Download started for video ${initiator}`);
+}
+
+chrome.action.onClicked.addListener(tab => {
+    chrome.scripting.executeScript({
+        target: { tabId: tab.id},
+        func: showDownloadStarted,
+        args: [tab.url, posts[tab.url]]
+    })
+})
