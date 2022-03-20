@@ -1,3 +1,5 @@
+var posts = [];
+
 function getTab() {
     return chrome.tabs.query({ active: true, currentWindow: true });
 }
@@ -74,7 +76,7 @@ chrome.action.onClicked.addListener((tab) => {
 });
 
 chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestCallback, {
-    urls: ["https://video.twimg.com/ext_tw_video/*.m3u8?tag*"],
+    urls: ["https://video.twimg.com/*/*.m3u8?tag*"],
 });
 
 chrome.runtime.onMessage.addListener((req, sender, _) => {
