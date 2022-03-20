@@ -78,12 +78,7 @@ chrome.runtime.onMessage.addListener((req, sender, _) => {
     posts[req.initiator] = req.target;
 });
 
-function sendToServer(initiator, videoUrl) {
-    console.debug(`Sending request to download video ${videoUrl} for post ${initiator}`)
-}
-
 function showDownloadStarted(initiator, videoUrl) {
-    sendToServer(initiator, videoUrl);
     alert(`Download started for video ${initiator}`);
 }
 
