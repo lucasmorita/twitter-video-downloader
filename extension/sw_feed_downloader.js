@@ -13,8 +13,7 @@ function postToDownload(url) {
     chrome.runtime.sendMessage({ initiator: document.URL, target: url });
 }
 
-async function isHomePage() {
-    let tabs = await getTab();
+function isHomePage(tabs) {
     console.debug(`comparing ${tabs[0].url} with homepage`);
     if (tabs[0].url.startsWith("https://twitter.com/home")) return true;
     return false;
@@ -24,17 +23,17 @@ function onBeforeRequestCallback(details) {
     chrome.storage.local.get("actualPage", (result) => {
         console.debug(`actualPage ${JSON.stringify(result)}`);
         if (result) {
-            if (isFullResolutionVideoLink(details) && isHomePage()) {
-                console.debug(`getting main video: ${details.url}`);
-                getTab().then((tabs) => {
+            getTab().then(tabs => {
+                if (isFullResolutionVideoLink(details) && !isHomePage(tabs)) {
+                    console.debug(`getting main video: ${details.url}`);
                     chrome.scripting.executeScript({
                         target: { tabId: tabs[0].id },
                         func: postToDownload,
                         args: [details.url],
                     });
-                });
-            }
-            chrome.storage.local.remove("actualPage");
+                }
+                chrome.storage.local.remove("actualPage");
+            });
         }
     });
 }
@@ -48,6 +47,9 @@ function webNavigationListener(details) {
 }
 
 chrome.webNavigation.onHistoryStateUpdated.addListener(webNavigationListener);
+chrome.webNavigation.onCommitted.addListener(webNavigationListener, {
+    url: [{ hostSuffix: 'twitter.com'} ]
+});
 
 // event listeners
 chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestCallback, {
