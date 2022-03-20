@@ -40,7 +40,7 @@ function onBeforeRequestCallback(details) {
 }
 
 function webNavigationListener(details) {
-    if (!details.url.match(/twitter\.com/)) {
+    if (details.url.includes('twitter.com/home')) {
         return;
     }
     console.debug(`Setting actualPage to ${details.url}`);
