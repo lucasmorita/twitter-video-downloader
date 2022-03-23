@@ -37,11 +37,12 @@ function onBeforeRequestCallback(details) {
         if (isHomePage(tabs)) return;
         chrome.storage.local.get("actualPage", (result) => {
             console.debug(`actualPage ${result.actualPage}`);
-            console.debug(`getting main video: ${details.url}`);
+            let sanitizedUrl = details.url.split('?')[0];
+            console.debug(`getting main video: ${sanitizedUrl}`);
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
                 func: videoToDownload,
-                args: [details.url],
+                args: [sanitizedUrl],
             });
         });
     });
