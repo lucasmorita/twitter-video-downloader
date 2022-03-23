@@ -18,10 +18,12 @@
     ],
     "host_permissions": [
         "https://twitter.com/*",
-        "https://video.twimg.com/ext_tw_video/*",
+        "https://video.twimg.com/*",
+        "https://pbs.twimg.com/*",
         "https://3c09-179-113-155-6.ngrok.io/*"
     ],
     "action": {
+        "default_popup": "popup.html",
         "default_title": "download video"
     }
 }
