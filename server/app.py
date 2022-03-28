@@ -1,18 +1,23 @@
-from flask import Flask, send_from_directory, jsonify, request
+import json
+
+import ffmpeg
+from flask import Flask, send_from_directory, jsonify, request, url_for, make_response
 from flask_cors import CORS, cross_origin
 from uuid import uuid4
 import os
-import logging
+
+from werkzeug.utils import redirect, send_file
 
 app = Flask(__name__)
 CORS(app)
-app.config['TWITTER_VIDEOS'] = 'D:\\workspace\\anti-fancam\\server\\videos\\'
+app.config['TWITTER_VIDEOS'] = 'D:\\workspace\\twitter-vd-downloader\\server\\videos'
 
 
 def convert(url):
     randomname = str(uuid4())
-    print(f'convert {url} as {randomname}')
-    os.system(f'ffmpeg -i {url} -c copy -bsf:a aac_adtstoasc -hide_banner -loglevel error ./videos/{randomname}.mp4')
+    sanitizedurl = url.split("?")[0]
+    print(f'convert {sanitizedurl} as {randomname}')
+    os.system(f'ffmpeg -i {sanitizedurl} -c copy -bsf:a aac_adtstoasc -hide_banner -loglevel error ./videos/{randomname}.mp4')
     return randomname
 
 
@@ -20,12 +25,10 @@ def convert(url):
 @cross_origin()
 def videos():
     if request.method == 'POST':
-        print(request.data, request.json)
-        logging.info(app.config['TWITTER_VIDEOS'])
-        if request.method == 'POST':
-            name = convert(request.json['videoUrl'])
-            data = {"name": name}
-            return jsonify(data), 200
+        requestjson = request.data.decode('utf8').replace("'", '"')
+        data = json.loads(requestjson)
+        name = convert(data['videoUrl'])
+        return redirect(url_for('downloads', filename=name))
     if request.method == 'GET':
         data = {"videos": os.listdir(os.path.join('.', 'videos'))}
         return jsonify(data), 200
@@ -34,12 +37,11 @@ def videos():
 
 @app.route('/downloads', methods=['GET'])
 @cross_origin()
-def download_videos():
+def downloads():
     if request.method == 'GET':
-        res = send_from_directory(app.config['TWITTER_VIDEOS'],
-                                  path=request.args.get('filename') + '.mp4',
-                                  as_attachment=True)
-        logging.info(res)
+        res = make_response(send_from_directory(app.config['TWITTER_VIDEOS'],
+                                                path=request.args.get('filename') + '.mp4',
+                                                as_attachment=True))
         return res
 
 
