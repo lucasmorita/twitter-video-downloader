@@ -71,7 +71,7 @@ function prepareVideoItem(post) {
     let a = document.createElement('a');
     let container = document.createElement('div');
     let imgContainer = document.createElement('div');
-    let btn = document.createElement('a');
+    let btn = document.createElement('button');
     let img = document.createElement('img');
     img.src = post.thumb;
     imgContainer.id = 'img-container'
