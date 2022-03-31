@@ -5,14 +5,6 @@ function getTab() {
     return chrome.tabs.query({ active: true, currentWindow: true });
 }
 
-function videoToDownload(url) {
-    console.debug(`sending ${document.URL} to extension`);
-    chrome.runtime.sendMessage({
-        initiator: document.URL,
-        videoUrl: url,
-    });
-}
-
 function isHomePage(tabs) {
     if (tabs[0].url.startsWith("https://twitter.com/home")) return true;
     return false;
@@ -44,7 +36,6 @@ function onBeforeRequestCallback(details) {
                 });
             }
         });
-        console.debug("about to get info about post");
     });
 }
 

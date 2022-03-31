@@ -14,7 +14,8 @@
         "webNavigation",
         "storage",
         "downloads",
-        "downloads.shelf"
+        "downloads.shelf",
+        "management"
     ],
     "host_permissions": [
         "https://twitter.com/*",
