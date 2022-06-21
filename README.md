@@ -23,13 +23,14 @@ Download videos from twitter
 sh install.sh
 ```
 
-### Extension
+### Manula
+#### Extension
 ```sh
 cd extension \
 && npm install && npm run build
 ```
 
-### Server
+#### Server
 - Build
 ```
 cd server \
