@@ -3,3 +3,6 @@
 **/venv/
 **/videos/
 **/node_modules/
+extension/release.zip
+extension/release
+extension/dist

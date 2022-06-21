@@ -58,7 +58,7 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(webNavigationListener, {
 
 // event listeners
 chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestCallback, {
-    urls: ["https://video.twimg.com/*/*.m3u8?tag*"],
+    urls: ["https://video.twimg.com/*/*.m3u8*"],
 });
 
 // executes when getInfoAboutPost is executed

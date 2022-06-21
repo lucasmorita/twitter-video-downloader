@@ -9,7 +9,7 @@ from werkzeug.utils import redirect, send_file
 
 app = Flask(__name__)
 CORS(app)
-app.config['TWITTER_VIDEOS'] = 'D:\\workspace\\twitter-vd-downloader\\server\\videos'
+app.config['TWITTER_VIDEOS'] = os.path.join(os.path.dirname(__file__), './videos')
 
 
 def convert(url):
@@ -27,7 +27,7 @@ def videos():
         requestjson = request.data.decode('utf8').replace("'", '"')
         data = json.loads(requestjson)
         name = convert(data['videoUrl'])
-        return redirect(url_for('downloads', filename=name))
+        return {"filename": name}
     if request.method == 'GET':
         data = {"videos": os.listdir(os.path.join('.', 'videos'))}
         return jsonify(data), 200
@@ -46,4 +46,4 @@ def downloads():
 
 if __name__ == '__main__':
     print(os.listdir(os.path.join('.', 'videos')))
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)
