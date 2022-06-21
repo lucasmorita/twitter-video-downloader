@@ -23,7 +23,7 @@ Download videos from twitter
 sh install.sh
 ```
 
-### Manula
+### Manual
 #### Extension
 ```sh
 cd extension \
