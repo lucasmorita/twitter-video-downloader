@@ -51,11 +51,13 @@
                 "src": "./src/**/background.js"
             }
         ],
-        "scss_bundles": [{
-            "src": [
-                "./src/popup.css"
-            ],
-            "name": "popup"
-        }]
+        "scss_bundles": [
+            {
+                "src": [
+                    "./src/popup.css"
+                ],
+                "name": "popup"
+            }
+        ]
     }
 }
