@@ -9,8 +9,9 @@
         "url": "https://github.com/lucasmorita/twitter-video-downloader"
     },
     "scripts": {
-        "start": "xt-build -e dev -w",
-        "start:firefox": "xt-build -e dev -p firefox -w",
+        "start": "concurrently \"npm run webpack:dev\" \"xt-build -e dev -w\"",
+        "start:firefox": "concurrently  \"npm run webpack:dev\" \"xt-build -e dev -p firefox -w\"",
+        "prebuild": "npm run webpack:prod",
         "build": "xt-build -e prod",
         "build:firefox": "xt-build -e prod -p firefox",
         "clean": "xt-clean",
@@ -18,7 +19,8 @@
         "test": "xt-test",
         "coverage": "nyc --reporter=lcov npm run test",
         "sync": "xt-sync",
-        "webpack": "webpack --config webpack.config.js"
+        "webpack:dev": "webpack --watch --mode=development --config webpack.config.js",
+        "webpack:prod": "webpack --mode=production --config webpack.config.js"
     },
     "babel": {
         "presets": [
@@ -64,5 +66,8 @@
                 "name": "popup"
             }
         ]
+    },
+    "dependencies": {
+        "concurrently": "^7.2.2"
     }
 }

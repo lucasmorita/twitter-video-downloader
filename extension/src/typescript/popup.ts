@@ -1,4 +1,4 @@
-var baseurl = 'http://localhost:5000/videos';
+const baseurl = 'http://localhost:5000/videos';
 
 document.getElementById('clear-downloads')?.addEventListener('click', () => {
     console.debug('Clearing downloads...')

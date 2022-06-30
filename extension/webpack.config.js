@@ -1,23 +1,21 @@
 const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
   entry: {
-    background: path.resolve(__dirname, 'src/background.ts'),
-    popup: path.resolve(__dirname, 'src/popup.ts')
+    background: path.resolve(__dirname, 'src', 'typescript', 'background.ts'),
+    popup: path.resolve(__dirname, 'src', 'typescript', 'popup.ts')
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'src'),
     filename: '[name].js'
   },
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: './src/static' }
-      ]
-    }),
-  ],
+  // plugins: [
+  //   new CopyPlugin({
+  //     patterns: [
+  //       { from: './src/static' }
+  //     ]
+  //   }),
+  // ],
   module: {
     rules: [
       {
