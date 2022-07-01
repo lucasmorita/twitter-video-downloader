@@ -19,7 +19,7 @@
         "test": "xt-test",
         "coverage": "nyc --reporter=lcov npm run test",
         "sync": "xt-sync",
-        "webpack:dev": "webpack --watch --mode=development --config webpack.config.js",
+        "webpack:dev": "webpack --watch --devtool=cheap-module-source-map --mode=development --config webpack.config.js",
         "webpack:prod": "webpack --mode=production --config webpack.config.js"
     },
     "babel": {

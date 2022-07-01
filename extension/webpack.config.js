@@ -9,13 +9,6 @@ module.exports = {
     path: path.resolve(__dirname, 'src'),
     filename: '[name].js'
   },
-  // plugins: [
-  //   new CopyPlugin({
-  //     patterns: [
-  //       { from: './src/static' }
-  //     ]
-  //   }),
-  // ],
   module: {
     rules: [
       {
