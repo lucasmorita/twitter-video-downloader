@@ -1,5 +1,4 @@
 Write-Host "Setting up docker container..."
-echo $args[0]
 
 $dir = Get-Location
 $dir = $dir.ToString()
@@ -10,8 +9,8 @@ $videoDir = $args[0]
 cd $server 
 docker build -t $tag .
 
-Write-Host "Mounting to dir: $videoDir" 
-docker run -v $videoDir:/usr/src/app/videos -p 5000:5000 --name $tag -i $tag 
+Write-Host "Mounting to dir: ${videoDir}" 
+docker run -v ${videoDir}:/usr/src/app/videos -p 5000:5000 --name $tag -i $tag
 
 Write-Host "Container up and running"
 
