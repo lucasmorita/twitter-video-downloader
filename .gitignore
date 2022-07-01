@@ -6,4 +6,6 @@
 extension/release.zip
 extension/release
 extension/dist
+extension/src/*.js
+extension/src/*.js.map
 release/*
