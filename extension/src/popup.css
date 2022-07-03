@@ -4,34 +4,33 @@
 }
 
 body {
-    height: 25rem;
+    min-height: 25rem;
     width: 18.75rem;
     margin: 0.625rem;
 }
 
-.clear-downloads {
-    padding: 0.5rem;
-    width: 100%;
+.tt-vid-downloader__button {
+    background: #4E9CAF;
     border: none;
-    border-radius: 10px;
-    background-color: lightgrey;
+    border-radius: 5px;
+    color: #FFF;
+    font-weight: bold;
+    padding: 0.625rem;
+    text-align: center;
+}
+
+.tt-vid-downloader__button:hover {
+    color: #205461;
+    cursor: pointer;
+}
+
+.clear-downloads {
+    width: 100%;
 }
 
 .title {
     text-align: center;
 }
-
-header {
-    max-width: 100%;
-    border-bottom: 1px solid #eee;
-}
-
-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
 
 li {
     float: left;
@@ -39,12 +38,6 @@ li {
     padding: 20px 0;
     border-bottom: 1px solid #eee;
     width: 100%;
-}
-
-ul {
-    margin: 0;
-    padding: 0;
-    display: flex;
 }
 
 a {
@@ -59,32 +52,6 @@ a {
     text-overflow: ellipsis;
 }
 
-#btn-download {
-    display: block;
-    width: fit-content;
-    background: #4E9CAF;
-    padding: 10px;
-    border: none;
-    text-align: center;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-}
-
-#btn-download:hover {
-    color: #205461;
-}
-
-#img-container {
-    max-width: 100px;
-    margin: 10px 0;
-}
-
-#img-container-header {
-    max-width: 100%;
-    margin: 10px 0;
-}
-
 #list-container {
     display: flex;
     flex-direction: row;
@@ -92,8 +59,34 @@ a {
     justify-content: center;
 }
 
-#last-video-header {
+.download-button {
+    display: block;
+    width: fit-content;
+}
+
+.spacer {
+    border-bottom: 1px solid #eee;
+}
+
+.video-card {
+    padding: 0.5rem;
+    margin-block: 1rem;
+    box-shadow: 0px 0px 10px -5px rgb(0 0 0 / 50%);
+    border-radius: 0.5rem;
+}
+
+.video-card .video-card__thumbnail {
+    max-height: 15rem;
+}
+
+.video-card .video-card__thumbnail > img {
+    height: auto;
+    width: auto;
+    max-height: 15rem;
+    max-width: 100%;
+}
+
+.video-card .video-card__actions {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
 }
