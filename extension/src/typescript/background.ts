@@ -1,27 +1,22 @@
-var initiator = "";
-var videoUrl = "";
-
 function getTab() {
     return chrome.tabs.query({ active: true, currentWindow: true });
 }
 
-function isHomePage(tabs) {
-    if (tabs[0].url.startsWith("https://twitter.com/home")) return true;
+function isHomePage(tabs: chrome.tabs.Tab[]): boolean {
+    if (tabs[0]) {
+        return Boolean(tabs[0].url?.startsWith('https://twitter.com/home'));
+    }
     return false;
 }
 
 function getInfoAboutPost() {
-    const thumb = document
-        .querySelector("meta[property='og:image']")
-        .getAttribute("content");
-    const desc = document
-        .querySelector("meta[property='og:description']")
-        .getAttribute("content");
+    const thumb = document.querySelector("meta[property='og:image']")?.getAttribute("content");
+    const desc = document.querySelector("meta[property='og:description']")?.getAttribute("content");
     const url = document.URL;
     chrome.runtime.sendMessage({ thumb, desc, url });
 }
 
-function onBeforeRequestCallback(details) {
+function onBeforeRequestCallback(details: any) {
     getTab().then((tabs) => {
         if (isHomePage(tabs)) return;
 
@@ -30,7 +25,7 @@ function onBeforeRequestCallback(details) {
                 chrome.storage.local.set({ videoUrl: details.url }, () => {
                     console.debug(`on callback set value for ${details.url}`);
                     chrome.scripting.executeScript({
-                        target: { tabId: tabs[0].id },
+                        target: { tabId: tabs[0].id as number },
                         func: getInfoAboutPost,
                     });
                 });
@@ -39,7 +34,7 @@ function onBeforeRequestCallback(details) {
     });
 }
 
-function webNavigationListener(details) {
+function webNavigationListener(details: any) {
     console.debug(`Setting actualPage to ${details.url}`);
     chrome.storage.local.set({ actualPage: details.url });
     chrome.storage.local.remove("videoUrl", () =>
@@ -73,7 +68,7 @@ chrome.runtime.onMessage.addListener((req, sender, _) => {
             videoUrl: "notdefined",
         },
         (results) => {
-            if (results.posts.some(post => post.url === url)) return;
+            if (results.posts.some((post: any) => post.url === url)) return;
             let { videoUrl } = results;
             chrome.storage.local.set({
                 posts: [

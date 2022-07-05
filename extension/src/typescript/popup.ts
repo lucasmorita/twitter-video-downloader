@@ -1,6 +1,6 @@
-var baseurl = 'http://localhost:5000/videos';
+const baseurl = 'http://localhost:5000/videos';
 
-document.getElementById('clear-downloads').addEventListener('click', () => {
+document.getElementById('clear-downloads')?.addEventListener('click', () => {
     console.debug('Clearing downloads...')
     chrome.storage.local.clear();
     window.location.reload();
@@ -13,7 +13,7 @@ chrome.storage.local.get('posts', results => {
     }
 })
 
-function updateLastVideoHeader(lastPost) {
+function updateLastVideoHeader(lastPost: any) {
     console.debug(`updating last video with ${JSON.stringify(lastPost)}`)
     let header = document.getElementById('last-video-header');
     let div = document.createElement('div');
@@ -39,11 +39,10 @@ function updateLastVideoHeader(lastPost) {
     btnDownload.textContent = 'Download';
     btnDownload.addEventListener('click', postvideo);
     div.appendChild(btnDownload);
-    header.appendChild(div);
-    
+    header?.appendChild(div);
 }
 
-function postvideo(event) {
+function postvideo(event: any) {
     let btn = event.target.closest('button');
     let posturl = btn.getAttribute('data-url');
     fetch(baseurl, {
@@ -65,7 +64,7 @@ function postvideo(event) {
         }).catch(err => console.error(err));
 }
 
-function prepareVideoItem(post) {
+function prepareVideoItem(post: any) {
     let ul = document.getElementById('video-list');
     let li = document.createElement('li');
     let a = document.createElement('a');
@@ -87,5 +86,5 @@ function prepareVideoItem(post) {
     li.appendChild(imgContainer);
     li.appendChild(btn);
     container.appendChild(li);
-    ul.prepend(container);
+    ul?.prepend(container);
 }

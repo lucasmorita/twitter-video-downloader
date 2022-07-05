@@ -1,6 +1,24 @@
 * {
-    display: flex;
-    flex-direction: column;
+    font-family: 'Roboto Slab', serif;
+    font-size: 16px;
+}
+
+body {
+    height: 25rem;
+    width: 18.75rem;
+    margin: 0.625rem;
+}
+
+.clear-downloads {
+    padding: 0.5rem;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background-color: lightgrey;
+}
+
+.title {
+    text-align: center;
 }
 
 header {
@@ -14,13 +32,6 @@ img {
     object-fit: contain;
 }
 
-body {
-    min-width: 300px;
-    max-width: 300px;
-    min-height: 400px;
-    max-height: 400px;
-    margin: 10px;
-}
 
 li {
     float: left;
