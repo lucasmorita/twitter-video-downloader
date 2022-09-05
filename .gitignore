@@ -1,11 +1,6 @@
-**/__pycache__/
-**/.idea/
-**/venv/
-**/videos/
 **/node_modules/
 extension/release.zip
 extension/release
 extension/dist
 extension/src/*.js
 extension/src/*.js.map
-release/*
