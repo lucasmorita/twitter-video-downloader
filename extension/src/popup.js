@@ -1,9 +1,15 @@
-const baseurl = 'http://localhost:5000/videos';
-
 document.getElementById('clear-downloads')?.addEventListener('click', () => {
     console.debug('Clearing downloads...')
     chrome.storage.local.clear();
     window.location.reload();
+});
+
+document.getElementById('check-ffmpeg')?.addEventListener('click', () => {
+    chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+        chrome.tabs.sendMessage(tabs[0].id, { ffmpeg: "isLoaded" }, response  => {
+            console.log(response)
+        });
+    });
 });
 
 chrome.storage.local.get('posts', results => {
@@ -42,28 +48,6 @@ function updateLastVideoHeader(lastPost) {
     header?.appendChild(div);
 }
 
-function postvideo(event) {
-    let btn = event.target.closest('button');
-    let posturl = btn.getAttribute('data-url');
-    fetch(baseurl, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({videoUrl: posturl})
-    })
-        .then(res => {
-            console.debug(`res ${JSON.stringify(res)}`);
-            console.debug(`posturl ${posturl}`);
-            let downloadLink = document.createElement('a');
-            downloadLink.setAttribute('download', posturl);
-            downloadLink.href = res.url;
-            downloadLink.target = '_blank';
-            downloadLink.click();
-        }).catch(err => console.error(err));
-}
-
 function prepareVideoItem() {
     let ul = document.getElementById('video-list');
     let li = document.createElement('li');
@@ -88,3 +72,4 @@ function prepareVideoItem() {
     container.appendChild(li);
     ul?.prepend(container);
 }
+

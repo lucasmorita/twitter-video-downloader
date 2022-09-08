@@ -6,7 +6,6 @@
     "version": "0.0.1",
     "version_name": "0.0.1",
     "manifest_version": 3,
-    "default_locale": "en",
     "minimum_chrome_version": "88",
     "permissions": [
         "tabs",
@@ -31,6 +30,12 @@
     "background": {
         "service_worker": "background.js"
     },
+    "content_scripts": [
+        {
+            "matches": ["https://twitter.com/*"],
+            "js": ["vendor/ffmpeg-core.js", "vendor/ffmpeg.min.js", "transcode.js"]
+        }
+    ],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {

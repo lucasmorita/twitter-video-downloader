@@ -4,7 +4,7 @@ function getTab() {
 
 function isHomePage(tabs) {
     if (tabs[0]) {
-        return Boolean(tabs[0].url?.startsWith('https://twitter.com/home'));
+        return tabs[0].url?.startsWith('https://twitter.com/home');
     }
     return false;
 }
