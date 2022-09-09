@@ -6,7 +6,6 @@
     "version": "0.0.1",
     "version_name": "0.0.1",
     "manifest_version": 3,
-    "default_locale": "en",
     "minimum_chrome_version": "88",
     "permissions": [
         "tabs",
@@ -25,19 +24,11 @@
         "https://pbs.twimg.com/*"
         
     ],
-    "icons": {
-        "128": "assets/img/128x128.png"
-    },
     "background": {
         "service_worker": "background.js"
     },
     "action": {
         "default_popup": "popup.html",
-        "default_icon": {
-            "16": "assets/img/16x16.png",
-            "24": "assets/img/24x24.png",
-            "32": "assets/img/32x32.png"
-        },
         "default_title": "Twitter Video downloader"
     }
 }
