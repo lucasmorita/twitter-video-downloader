@@ -1,14 +1,15 @@
 const baseurl = 'http://localhost:5000/videos';
 
 document.getElementById('clear-downloads')?.addEventListener('click', () => {
-    console.debug('Clearing downloads...')
     chrome.storage.local.clear();
     window.location.reload();
 });
 
 chrome.storage.local.get('posts', results => {
-    updateLastVideoHeader(results.posts[results.posts.length - 1])
-    for (let postIdx = 0; postIdx < results.posts.length - 1; postIdx++) {
+    if (Object.keys(results).length === 0) return;
+    const lastPost = results.posts.length - 1;
+    updateLastVideoHeader(results.posts[lastPost]);
+    for (let postIdx = 0; postIdx < lastPost; postIdx++) {
         prepareVideoItem(results.posts[postIdx]);
     }
 })
@@ -33,7 +34,7 @@ function updateLastVideoHeader(lastPost: any) {
     imgContainer.id = 'img-container-header'
     div.appendChild(imgContainer);
     let btnDownload = document.createElement('button');
-    btnDownload.id = 'btn-download';
+    btnDownload.className = 'btn-download';
     btnDownload.setAttribute('data-url', lastPost.videoUrl);
     btnDownload.setAttribute('download', lastPost.desc);
     btnDownload.textContent = 'Download';
@@ -42,26 +43,20 @@ function updateLastVideoHeader(lastPost: any) {
     header?.appendChild(div);
 }
 
-function postvideo(event: any) {
+async function postvideo(event: any) {
     let btn = event.target.closest('button');
     let posturl = btn.getAttribute('data-url');
-    fetch(baseurl, {
+    const res = await fetch(baseurl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({videoUrl: posturl})
-    })
-        .then(res => {
-            console.debug(`res ${JSON.stringify(res)}`);
-            console.debug(`posturl ${posturl}`);
-            let downloadLink = document.createElement('a');
-            downloadLink.setAttribute('download', posturl);
-            downloadLink.href = res.url;
-            downloadLink.target = '_blank';
-            downloadLink.click();
-        }).catch(err => console.error(err));
+    });
+    if (res.status === 200) {
+        console.debug('success')
+    }
 }
 
 function prepareVideoItem(post: any) {
@@ -72,15 +67,16 @@ function prepareVideoItem(post: any) {
     let btn = document.createElement('button');
     let img = document.createElement('img');
     img.src = post.thumb;
-    imgContainer.id = 'img-container'
+    imgContainer.id = 'img-container';
     a.href = post.url;
     a.text = post.desc;
+    a.target = '_blank';
     btn.textContent = 'Download';
-    btn.id = 'btn-download';
+    btn.className = 'btn-download';
     btn.setAttribute('data-url', post.videoUrl);
     btn.addEventListener('click', postvideo);
     imgContainer.appendChild(img);
-    li.className = 'video-item'
+    li.className = 'video-item';
     li.appendChild(a);
     li.appendChild(imgContainer);
     li.appendChild(btn);
