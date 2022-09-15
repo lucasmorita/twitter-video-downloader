@@ -68,13 +68,11 @@ function prepareVideoItem(post: any) {
     let ul = document.getElementById('video-list');
     let li = document.createElement('li');
     let a = document.createElement('a');
-    let container = document.createElement('div');
     let imgContainer = document.createElement('div');
     let btn = document.createElement('button');
     let img = document.createElement('img');
     img.src = post.thumb;
     imgContainer.id = 'img-container'
-    container.id = 'list-container';
     a.href = post.url;
     a.text = post.desc;
     btn.textContent = 'Download';
@@ -82,9 +80,9 @@ function prepareVideoItem(post: any) {
     btn.setAttribute('data-url', post.videoUrl);
     btn.addEventListener('click', postvideo);
     imgContainer.appendChild(img);
+    li.className = 'video-item'
     li.appendChild(a);
     li.appendChild(imgContainer);
     li.appendChild(btn);
-    container.appendChild(li);
-    ul?.prepend(container);
+    ul?.prepend(li);
 }
