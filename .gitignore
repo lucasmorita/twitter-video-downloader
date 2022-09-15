@@ -12,3 +12,4 @@ release/*
 **/build
 **/dist
 server/*.spec
+ffmpeg/

@@ -26,6 +26,12 @@ header {
     border-bottom: 1px solid #eee;
 }
 
+header > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 img {
     max-width: 100%;
 }
