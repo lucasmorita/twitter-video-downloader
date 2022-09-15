@@ -9,3 +9,6 @@ extension/dist
 extension/src/*.js
 extension/src/*.js.map
 release/*
+**/build
+**/dist
+server/*.spec
